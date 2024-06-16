@@ -1,0 +1,11 @@
+{
+    "resourceGroup": "myResourceGroup",
+    "location": "eastus",
+    "registryName": "myContainerRegistry",
+    "taskName": "myBuildTask",
+    "imageName": "myapp",
+    "githubRepo": "https://github.com/myGithubAccount/myRepo.git",
+    "dockerfilePath": "Dockerfile",
+    "githubAccessToken": "YOUR_GITHUB_ACCESS_TOKEN"
+  }
+  
