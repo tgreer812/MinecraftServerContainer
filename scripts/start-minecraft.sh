@@ -70,4 +70,4 @@ white-list=${WHITE_LIST:-false}
 EOL
 
 # Start the Minecraft server
-java -Xmx${JAVA_XMX:-2048M} -Xms${JAVA_XMS:-1024M} -jar minecraft_server.jar nogui
+java -Xmx${JAVA_XMX:-4096M} -Xms${JAVA_XMS:-1024M} -jar minecraft_server.jar nogui
