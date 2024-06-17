@@ -30,7 +30,14 @@ Write-Host "Dockerfile Path: $($config.dockerfilePath)"
 
 # Create ACR task with source control triggers disabled
 Write-Host "Creating ACR task..."
-az acr task create --registry $config.registryName --name $config.taskName --image "$($config.imageName):{{.Run.ID}}" --context $config.githubRepo --file $config.dockerfilePath --commit-trigger-enabled false --pull-request-trigger-enabled false
+az acr task create `
+    --registry $config.registryName `
+    --name $config.taskName `
+    --image "$($config.imageName):{{.Run.ID}}" `
+    --context $config.githubRepo `
+    --file $config.dockerfilePath `
+    --commit-trigger-enabled false `
+    --pull-request-trigger-enabled false
 Check-Error "Failed to create ACR task. Exiting."
 
 # Run ACR task
