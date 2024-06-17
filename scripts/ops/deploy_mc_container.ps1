@@ -4,19 +4,27 @@ $jsonPath = "..\..\config\deploy_args.json"
 # Read and parse the JSON content
 $jsonContent = Get-Content -Raw -Path $jsonPath | ConvertFrom-Json
 
-# Determine if ports is an array or a single value
+# Initialize the base command
+$command = @(
+    "az container create",
+    "--resource-group $($jsonContent.'resource-group')",
+    "--name $($jsonContent.name)",
+    "--image $($jsonContent.image)",
+    "--cpu $($jsonContent.cpu)",
+    "--memory $($jsonContent.memory)",
+    "--ip-address $($jsonContent.'ip-address')"
+)
+
+# Add ports to the command
 if ($jsonContent.ports -is [System.Array]) {
     $portsString = $jsonContent.ports -join ' '
+    $command += "--ports $portsString"
 } else {
-    $portsString = $jsonContent.ports.ToString()
+    $command += "--ports $jsonContent.ports"
 }
 
-# Execute the az container create command with the parameters from the JSON file
-az container create `
-    --resource-group $jsonContent.'resource-group' `
-    --name $jsonContent.name `
-    --image $jsonContent.image `
-    --ports $portsString `
-    --cpu $jsonContent.cpu `
-    --memory $jsonContent.memory `
-    --ip-address $jsonContent.'ip-address'
+# Convert the command array to a single string
+$commandString = $command -join " "
+
+# Execute the command
+Invoke-Expression $commandString
