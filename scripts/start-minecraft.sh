@@ -69,5 +69,8 @@ view-distance=${VIEW_DISTANCE:-10}
 white-list=${WHITE_LIST:-false}
 EOL
 
+# Agree to the Minecraft EULA
+echo "eula=true" > eula.txt
+
 # Start the Minecraft server
 java -Xmx${JAVA_XMX:-4096M} -Xms${JAVA_XMS:-1024M} -jar minecraft_server.jar nogui
