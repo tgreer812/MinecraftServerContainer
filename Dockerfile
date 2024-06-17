@@ -14,7 +14,7 @@ RUN wget -O minecraft_server.jar https://piston-data.mojang.com/v1/objects/45069
 RUN echo "eula=true" > eula.txt
 
 # Copy the startup script to the container
-COPY start-minecraft.sh /app/start-minecraft.sh
+COPY scripts/start-minecraft.sh /app/start-minecraft.sh
 
 # Make the startup script executable
 RUN chmod +x /app/start-minecraft.sh
