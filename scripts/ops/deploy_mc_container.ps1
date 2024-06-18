@@ -34,7 +34,7 @@ if ($jsonContent.'azure-file-volume-account-name' -and $storageAccountKey -and $
     $command += "--azure-file-volume-account-name $($jsonContent.'azure-file-volume-account-name')"
     $command += "--azure-file-volume-account-key $storageAccountKey"
     $command += "--azure-file-volume-share-name $($jsonContent.'azure-file-volume-share-name')"
-    $command += "--azure-file-volume-mount-path /app/data"
+    $command += "--azure-file-volume-mount-path $($jsonContent.'azure-file-volume-mount-path')"
 }
 
 # Convert the command array to a single string

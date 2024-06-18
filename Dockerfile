@@ -5,7 +5,7 @@ FROM ubuntu:latest
 RUN apt-get update && apt-get install -y openjdk-21-jre-headless wget
 
 # Create a directory for the Minecraft server if it doesn't exist
-RUN mkdir -p /app/data
+RUN mkdir -p /mnt/server
 
 # Copy the startup script to the container
 COPY scripts/start-minecraft.sh /app/start-minecraft.sh
