@@ -1,0 +1,10 @@
+{
+    "resourceGroup": "tylergreer-rg",
+    "location": "eastus",
+    "registryName": "tylergreer",
+    "taskName": "mcBuildTask",
+    "imageName": "minecraftserver",
+    "githubRepo": "https://github.com/tgreer812/MinecraftServerContainer.git",
+    "dockerfilePath": "Dockerfile"
+  }
+  
