@@ -21,7 +21,7 @@ else
 fi
 
 # Create server.properties from environment variables
-cat <<EOL > $SERVER_PATH/server.properties
+cat <<EOL > /app/server.properties
 #Minecraft server properties
 #$(date)
 accepts-transfers=${ACCEPTS_TRANSFERS:-false}
@@ -88,7 +88,7 @@ white-list=${WHITE_LIST:-false}
 EOL
 
 # Agree to the Minecraft EULA
-echo "eula=true" > $SERVER_PATH/eula.txt
+echo "eula=true" > /app/eula.txt
 
 # Start the Minecraft server
 java -Xmx${JAVA_XMX:-4096M} -Xms${JAVA_XMS:-1024M} -jar $SERVER_PATH/minecraft_server.jar nogui
