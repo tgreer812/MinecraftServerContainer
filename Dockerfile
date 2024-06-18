@@ -23,4 +23,4 @@ WORKDIR /app
 EXPOSE 25565 25575
 
 # Run the startup script
-CMD ["./app/start-minecraft.sh"]
+CMD ["/app/start-minecraft.sh"]
