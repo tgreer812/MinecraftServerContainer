@@ -1,3 +1,7 @@
+param (
+    [string]$storageAccountKey
+)
+
 # Path to the JSON file
 $jsonPath = "..\..\config\deploy_args.json"
 
@@ -21,6 +25,14 @@ if ($jsonContent.ports -is [System.Array]) {
     $command += "--ports $portsString"
 } else {
     $command += "--ports $jsonContent.ports"
+}
+
+# Add Azure file share mount if specified
+if ($jsonContent.'azure-file-volume-account-name' -and $storageAccountKey -and $jsonContent.'azure-file-volume-share-name' -and $jsonContent.'azure-file-volume-mount-path') {
+    $command += "--azure-file-volume-account-name $($jsonContent.'azure-file-volume-account-name')"
+    $command += "--azure-file-volume-account-key $storageAccountKey"
+    $command += "--azure-file-volume-share-name $($jsonContent.'azure-file-volume-share-name')"
+    $command += "--azure-file-volume-mount-path $($jsonContent.'azure-file-volume-mount-path')"
 }
 
 # Convert the command array to a single string
