@@ -1,0 +1,9 @@
+{
+    "resource-group": "tg-minecraft-rg",
+    "name": "test-minecraft-server-2",
+    "image": "tylergreer.azurecr.io/minecraftserver:cae",
+    "ports": [25565, 25575],
+    "cpu": 2,
+    "memory": 8,
+    "ip-address": "Public"
+}
