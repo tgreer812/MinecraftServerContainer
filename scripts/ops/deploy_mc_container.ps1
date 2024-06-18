@@ -12,7 +12,7 @@ $jsonContent = Get-Content -Raw -Path $jsonPath | ConvertFrom-Json
 $command = @(
     "az container create",
     "--debug",
-    "--verbose",
+    "--verbose"
     "--resource-group $($jsonContent.'resource-group')",
     "--name $($jsonContent.name)",
     "--image $($jsonContent.image)",
@@ -34,16 +34,11 @@ if ($jsonContent.'azure-file-volume-account-name' -and $storageAccountKey -and $
     $command += "--azure-file-volume-account-name $($jsonContent.'azure-file-volume-account-name')"
     $command += "--azure-file-volume-account-key $storageAccountKey"
     $command += "--azure-file-volume-share-name $($jsonContent.'azure-file-volume-share-name')"
-    $command += "--azure-file-volume-mount-path $($jsonContent.'azure-file-volume-mount-path')"
-} else {
-    Write-Host "Azure file share mount not specified. Server will not be persistent. Skipping..."
+    $command += "--azure-file-volume-mount-path /app/data"
 }
 
 # Convert the command array to a single string
 $commandString = $command -join " "
-
-# Print the command for debugging
-# Write-Host "Command:" $commandString
 
 # Execute the command
 Invoke-Expression $commandString

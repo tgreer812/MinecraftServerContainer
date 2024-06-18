@@ -9,15 +9,15 @@ DEFAULT_JAR_URL="https://piston-data.mojang.com/v1/objects/450698d1863ab5180c25d
 JAR_URL=${JAR_URL:-$DEFAULT_JAR_URL}
 
 # Check if the Minecraft server jar file exists
-if [ ! -f /app/minecraft_server.jar ]; then
+if [ ! -f /app/data/minecraft_server.jar ]; then
   echo "Downloading Minecraft server jar file from $JAR_URL..."
-  wget -O /app/minecraft_server.jar $JAR_URL
+  wget -O /app/data/minecraft_server.jar $JAR_URL
 else
   echo "Minecraft server jar file already exists."
 fi
 
 # Create server.properties from environment variables
-cat <<EOL > server.properties
+cat <<EOL > /app/data/server.properties
 #Minecraft server properties
 #$(date)
 accepts-transfers=${ACCEPTS_TRANSFERS:-false}
@@ -84,7 +84,7 @@ white-list=${WHITE_LIST:-false}
 EOL
 
 # Agree to the Minecraft EULA
-echo "eula=true" > eula.txt
+echo "eula=true" > /app/data/eula.txt
 
 # Start the Minecraft server
-java -Xmx${JAVA_XMX:-4096M} -Xms${JAVA_XMS:-1024M} -jar minecraft_server.jar nogui
+java -Xmx${JAVA_XMX:-4096M} -Xms${JAVA_XMS:-1024M} -jar /app/data/minecraft_server.jar nogui

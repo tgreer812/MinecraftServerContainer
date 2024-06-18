@@ -2,13 +2,10 @@
 FROM ubuntu:latest
 
 # Install dependencies and OpenJDK 21
-RUN apt-get update && apt-get install -y openjdk-21-jre-headless
-
-# Install wget
-RUN apt-get install -y wget
+RUN apt-get update && apt-get install -y openjdk-21-jre-headless wget
 
 # Create a directory for the Minecraft server if it doesn't exist
-RUN mkdir -p /app
+RUN mkdir -p /app/data
 
 # Copy the startup script to the container
 COPY scripts/start-minecraft.sh /app/start-minecraft.sh
