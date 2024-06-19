@@ -15,7 +15,7 @@ RUN . /setup-env.sh && mkdir -p $SERVER_PATH
 WORKDIR /app
 
 # Create a symbolic link from /app to the server path
-RUN ln -s $SERVER_PATH ./
+RUN ln -sf $SERVER_PATH ./
 
 
 # Copy the startup script to the container
