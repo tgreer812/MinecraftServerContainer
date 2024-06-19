@@ -4,8 +4,6 @@ echo "Starting Minecraft server..."
 
 echo "Current directory: $(pwd)"
 
-exit 0
-
 # Define the default jar URL
 DEFAULT_JAR_URL="https://piston-data.mojang.com/v1/objects/450698d1863ab5180c25d7c804ef0fe6369dd1ba/server.jar"
 
@@ -91,5 +89,4 @@ EOL
 echo "eula=true" > ./eula.txt
 
 # Start the Minecraft server
-cd $SERVER_PATH
 java -Xmx${JAVA_XMX:-4096M} -Xms${JAVA_XMS:-1024M} -jar ./minecraft_server.jar nogui

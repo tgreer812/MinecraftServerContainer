@@ -1,7 +1,7 @@
 {
     "resource-group": "tg-minecraft-rg",
-    "name": "test-minecraft-server3",
-    "image": "tylergreer.azurecr.io/minecraftserver:ca1d",
+    "name": "test-minecraft-server4",
+    "image": "tylergreer.azurecr.io/minecraftserver:ca1e",
     "ports": [25565, 25575],
     "cpu": 2,
     "memory": 8,
