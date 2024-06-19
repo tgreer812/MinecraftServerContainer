@@ -11,11 +11,11 @@ RUN chmod +x /setup-env.sh
 # Source the setup script to set environment variables and create the server directory
 RUN . /setup-env.sh && mkdir -p $SERVER_PATH
 
-# Create a symbolic link from /app to the server path
-RUN ln -sf $SERVER_PATH /app
-
 # Set the working directory to /app (which is now a symlink to $SERVER_PATH)
 WORKDIR /app
+
+# Create a symbolic link from /app to the server path
+RUN ln -sf $SERVER_PATH /app/server
 
 # Copy the startup script to the container
 COPY scripts/start-minecraft.sh .
@@ -24,10 +24,10 @@ COPY scripts/start-minecraft.sh .
 RUN chmod +x ./start-minecraft.sh
 
 # Set the entrypoint
-COPY scripts/entrypoint.sh /entrypoint.sh
+COPY scripts/entrypoint.sh ./entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["./entrypoint.sh"]
 
 # Expose the Minecraft server port and the RCON port
 EXPOSE 25565 25575

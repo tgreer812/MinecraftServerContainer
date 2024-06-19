@@ -2,9 +2,6 @@
 
 echo "Starting Minecraft server..."
 
-# Define the path to the server
-SERVER_PATH="./server"
-
 # Define the default jar URL
 DEFAULT_JAR_URL="https://piston-data.mojang.com/v1/objects/450698d1863ab5180c25d7c804ef0fe6369dd1ba/server.jar"
 
@@ -12,15 +9,15 @@ DEFAULT_JAR_URL="https://piston-data.mojang.com/v1/objects/450698d1863ab5180c25d
 JAR_URL=${JAR_URL:-$DEFAULT_JAR_URL}
 
 # Check if the Minecraft server jar file exists
-if [ ! -f $SERVER_PATH/minecraft_server.jar ]; then
+if [ ! -f ./minecraft_server.jar ]; then
   echo "Downloading Minecraft server jar file from $JAR_URL..."
-  wget -O $SERVER_PATH/minecraft_server.jar $JAR_URL
+  wget -O minecraft_server.jar $JAR_URL
 else
   echo "Minecraft server jar file already exists."
 fi
 
 # Create server.properties from environment variables
-cat <<EOL > $SERVER_PATH/server.properties
+cat <<EOL > ./server.properties
 #Minecraft server properties
 #$(date)
 accepts-transfers=${ACCEPTS_TRANSFERS:-false}
@@ -87,7 +84,7 @@ white-list=${WHITE_LIST:-false}
 EOL
 
 # Agree to the Minecraft EULA
-echo "eula=true" > $SERVER_PATH/eula.txt
+echo "eula=true" > ./eula.txt
 
 # Start the Minecraft server
 cd $SERVER_PATH
