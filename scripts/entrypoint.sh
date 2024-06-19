@@ -10,4 +10,4 @@ echo "Contents of current directory: $(ls -la)"
 cd ./server || exit 1
 
 # Run the start-minecraft.sh script
-../start-minecraft.sh
+/app/start-minecraft.sh
