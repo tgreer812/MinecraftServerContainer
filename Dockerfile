@@ -18,13 +18,17 @@ RUN chmod +x /setup-env.sh
 # The . command is equivalent to the source command in bash and is important 
 # because it allows the script to set environment variables in the current shell
 # NOTE: This needs to be done in the same RUN command in order for the environment variables to persist
-RUN . /setup-env.sh && echo "The mount path is $MOUNT_PATH" && mkdir -p $MOUNT_PATH && ln -sf $MOUNT_PATH ./server && ls -la ./
+RUN . /setup-env.sh && \
+    echo "The mount path is $MOUNT_PATH" && \
+    mkdir -p $MOUNT_PATH && \
+    ln -sf $MOUNT_PATH ./server && \
+    ls -la ./
 
 # Copy the startup script to the container
 COPY scripts/start-minecraft.sh .
 
 # Make the startup script executable
-RUN chmod +x ./start-minecraft.sh
+RUN chmod +x /app/start-minecraft.sh
 
 # Set the entrypoint
 COPY scripts/entrypoint.sh /entrypoint.sh
@@ -33,9 +37,5 @@ RUN chmod +x /entrypoint.sh
 # Expose the Minecraft server port and the RCON port
 EXPOSE 25565 25575
 
-RUN echo "The Dockerfile is complete."
-
 # Run the entrypoint script
 ENTRYPOINT ["/entrypoint.sh"]
-
-
