@@ -11,17 +11,17 @@ RUN chmod +x /setup-env.sh
 # Source the setup script to set environment variables and create the server directory
 RUN . /setup-env.sh && mkdir -p $SERVER_PATH
 
-# Set the working directory to /app
+# Create a symbolic link from /app to the server path
+RUN ln -sf $SERVER_PATH /app
+
+# Set the working directory to /app (which is now a symlink to $SERVER_PATH)
 WORKDIR /app
 
-# Create a symbolic link within /app to the server path
-RUN ln -sf $SERVER_PATH server
-
 # Copy the startup script to the container
-COPY scripts/start-minecraft.sh ./server/start-minecraft.sh
+COPY scripts/start-minecraft.sh .
 
 # Make the startup script executable
-RUN chmod +x ./server/start-minecraft.sh
+RUN chmod +x ./start-minecraft.sh
 
 # Set the entrypoint
 COPY scripts/entrypoint.sh /entrypoint.sh

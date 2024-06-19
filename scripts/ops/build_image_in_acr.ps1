@@ -31,6 +31,8 @@ Write-Host "Dockerfile Path: $($config.dockerfilePath)"
 # Create ACR task with source control triggers disabled
 Write-Host "Creating ACR task..."
 az acr task create `
+    --debug `
+    --verbose `
     --registry $config.registryName `
     --name $config.taskName `
     --image "$($config.imageName):{{.Run.ID}}" `
