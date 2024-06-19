@@ -12,13 +12,20 @@ COPY scripts/setup-env.sh /setup-env.sh
 RUN chmod +x /setup-env.sh
 
 # Source the setup script to set environment variables and create the server directory
-RUN . /setup-env.sh && mkdir -p $SERVER_PATH
+RUN /setup-env.sh
 
-# Set the working directory to /app (which is now a symlink to $SERVER_PATH)
+# This should be the mount path for the volume
+RUN echo "The mount path is $MOUNT_PATH"
+
+# Make sure the persistence directory exists
+# If it doesn't, create it, but it will be emphemeral because it's not a volume
+RUN mkdir -p $MOUNT_PATH
+
+# Set the working directory to /app
 WORKDIR /app
 
 # Create a symbolic link from /app to the server path
-RUN ln -sf $SERVER_PATH /app/server && ls -l /app
+RUN ln -sf $MOUNT_PATH ./server && ls -la ./
 
 # Copy the startup script to the container
 COPY scripts/start-minecraft.sh .
