@@ -25,9 +25,12 @@ RUN chmod +x ./start-minecraft.sh
 
 # Set the entrypoint
 COPY scripts/entrypoint.sh ./entrypoint.sh
-RUN chmod +x ./entrypoint.sh
-
-ENTRYPOINT ["./entrypoint.sh"]
+RUN chmod +x entrypoint.sh
 
 # Expose the Minecraft server port and the RCON port
 EXPOSE 25565 25575
+
+# Run the entrypoint script
+ENTRYPOINT ["./entrypoint.sh"]
+
+RUN echo "The Dockerfile is complete."
