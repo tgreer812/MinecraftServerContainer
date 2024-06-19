@@ -18,7 +18,7 @@ RUN . /setup-env.sh && mkdir -p $SERVER_PATH
 WORKDIR /app
 
 # Create a symbolic link from /app to the server path
-RUN ln -sf $SERVER_PATH /app/server
+RUN ln -sf $SERVER_PATH /app/server && ls -l /app
 
 # Copy the startup script to the container
 COPY scripts/start-minecraft.sh .
