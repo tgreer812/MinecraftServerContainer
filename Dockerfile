@@ -4,20 +4,31 @@ FROM ubuntu:latest
 # Install dependencies and OpenJDK 21
 RUN apt-get update && apt-get install -y openjdk-21-jre-headless wget
 
-# Create a directory for the Minecraft server if it doesn't exist
-RUN mkdir -p /mnt/server
+# Copy the setup script
+COPY scripts/setup-env.sh /setup-env.sh
+RUN chmod +x /setup-env.sh
+
+# Source the setup script to set environment variables and create the server directory
+RUN . /setup-env.sh && mkdir -p $SERVER_PATH
+
+# Set the working directory to /app
+WORKDIR /app
+
+# Create a symbolic link from /app to the server path
+RUN ln -s $SERVER_PATH .
+
 
 # Copy the startup script to the container
-COPY scripts/start-minecraft.sh /app/start-minecraft.sh
+COPY scripts/start-minecraft.sh .
 
 # Make the startup script executable
-RUN chmod +x /app/start-minecraft.sh
+RUN chmod +x ./start-minecraft.sh
 
-# Set the working directory
-WORKDIR /app
+# Set the entrypoint
+COPY scripts/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
 
 # Expose the Minecraft server port and the RCON port
 EXPOSE 25565 25575
-
-# Run the startup script
-CMD ["/app/start-minecraft.sh"]
