@@ -1,6 +1,9 @@
 # Use a base Linux image
 FROM ubuntu:latest
 
+# Log the start of the Dockerfile
+RUN echo "The Dockerfile has started."
+
 # Install dependencies and OpenJDK 21
 RUN apt-get update && apt-get install -y openjdk-21-jre-headless wget
 
@@ -30,7 +33,9 @@ RUN chmod +x /entrypoint.sh
 # Expose the Minecraft server port and the RCON port
 EXPOSE 25565 25575
 
+RUN echo "The Dockerfile is complete."
+
 # Run the entrypoint script
 ENTRYPOINT ["/entrypoint.sh"]
 
-RUN echo "The Dockerfile is complete."
+
