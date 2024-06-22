@@ -1,0 +1,12 @@
+{
+    "resource-group": "tg-minecraft-rg",
+    "name": "test-minecraft-server",
+    "image": "tylergreer.azurecr.io/minecraftserver:ca1f",
+    "ports": [25565, 25575],
+    "cpu": 2,
+    "memory": 8,
+    "ip-address": "Public",
+    "azure-file-volume-account-name": "tgminecraftstorage",
+    "azure-file-volume-share-name": "minecraftforgeserver",
+    "azure-file-volume-mount-path": "/mnt/server"
+}

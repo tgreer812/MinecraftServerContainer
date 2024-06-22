@@ -10,6 +10,12 @@ RUN apt-get update && apt-get install -y openjdk-21-jre-headless wget
 # Set the working directory to /app
 WORKDIR /app
 
+# Define a build argument for forge
+ARG USE_FORGE=false
+
+# Set an environment variable based on the build argument
+ENV USE_FORGE_ENV=${USE_FORGE}
+
 # Copy the setup script
 COPY scripts/setup-env.sh /setup-env.sh
 RUN chmod +x /setup-env.sh
@@ -25,10 +31,16 @@ RUN . /setup-env.sh && \
     ls -la ./
 
 # Copy the startup script to the container
-COPY scripts/start-minecraft.sh .
+COPY scripts/start-vanilla-server.sh .
 
 # Make the startup script executable
-RUN chmod +x /app/start-minecraft.sh
+RUN chmod +x /app/start-vanilla-server.sh
+
+# Copy the startup script to the container
+COPY scripts/start-forge-server.sh .
+
+# Make the startup script executable
+RUN chmod +x /app/start-forge-server.sh
 
 # Set the entrypoint
 COPY scripts/entrypoint.sh /entrypoint.sh

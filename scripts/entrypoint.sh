@@ -16,4 +16,9 @@ echo "Contents of current directory: $(ls -la)"
 
 
 # Run the start-minecraft.sh script
-cd ./server && /app/start-minecraft.sh
+if [ "$USE_FORGE" = "true" ]; then
+  echo "Starting Minecraft Forge server..."
+  cd ./server && /app/start-forge-server.sh
+else
+  echo "Starting Minecraft Vanilla server..."
+    cd ./server && /app/start-vanilla-server.sh

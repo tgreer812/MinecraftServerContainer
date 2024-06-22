@@ -1,5 +1,5 @@
 # Load configuration from JSON file
-$config = Get-Content -Raw -Path "..\..\config\task_args.json" | ConvertFrom-Json
+$config = Get-Content -Raw -Path "..\config\task_args.json" | ConvertFrom-Json
 
 # Function to check for errors and exit if an error occurs
 function Check-Error {
