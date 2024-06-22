@@ -1,5 +1,17 @@
+param (
+    [string]$configPath,
+    [bool]$forge
+)
+
 # Load configuration from JSON file
-$config = Get-Content -Raw -Path "..\config\task_args.json" | ConvertFrom-Json
+$config = Get-Content -Raw -Path $configPath | ConvertFrom-Json
+
+# Set forge to false if not specified
+if (-not $forge) {
+    $forge = $false
+} else {
+    $forge = $true
+}
 
 # Function to check for errors and exit if an error occurs
 function Check-Error {
@@ -30,22 +42,33 @@ Write-Host "Dockerfile Path: $($config.dockerfilePath)"
 
 # Create ACR task with source control triggers disabled
 Write-Host "Creating ACR task..."
-az acr task create `
-    --debug `
-    --verbose `
-    --registry $config.registryName `
-    --name $config.taskName `
-    --image "$($config.imageName):{{.Run.ID}}" `
-    --context $config.githubRepo `
-    --file $config.dockerfilePath `
-    --commit-trigger-enabled false `
-    --pull-request-trigger-enabled false
+
+# Initialize the base command
+$command = "az acr task create"
+
+# Add arguments one at a time
+$command += " --debug"
+$command += " --verbose"
+$command += " --registry $($config.registryName)"
+$command += " --name $($config.taskName)"
+$command += " --image $($config.imageName):{{.Run.ID}}"
+$command += " --context $($config.githubRepo)"
+$command += " --file $($config.dockerfilePath)"
+$command += " --commit-trigger-enabled false"
+$command += " --pull-request-trigger-enabled false"
+
+# Add the build argument if the forge flag is set
+if ($forge) {
+    $command += " --arg USE_FORGE=true"
+}
+
+# Output the full command (for debugging)
+Write-Host "Running command: $command"
+
+# Run the command
+Invoke-Expression $command
 Check-Error "Failed to create ACR task. Exiting."
 
-# Run ACR task
-Write-Host "Running ACR task..."
-az acr task run --registry $config.registryName --name $config.taskName
-Check-Error "Failed to run ACR task. Exiting."
 
 Write-Host "Done."
 pause

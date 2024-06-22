@@ -3,7 +3,7 @@ param (
 )
 
 # Path to the JSON file
-$jsonPath = "..\config\deploy_args.json"
+$jsonPath = "..\config\deploy_forge_args.json"
 
 # Read and parse the JSON content
 $jsonContent = Get-Content -Raw -Path $jsonPath | ConvertFrom-Json
