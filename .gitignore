@@ -1,4 +1,5 @@
 config.json
 exampleserver/*
 exampleforgeserver/*
+secrets/*
 secrets.txt

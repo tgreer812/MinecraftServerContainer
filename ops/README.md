@@ -19,16 +19,19 @@ Before running the scripts, make sure you have the following prerequisites insta
 
 2. Navigate to the `ops` folder:
 
-```ps1
-.\build_image_in_acr.ps1
-```
+    ```ps1
+    .\build_image_in_acr.ps1
+    ```
 
-Use the desired deploy script
+3. Use the desired deploy script:
 
-```ps1
-# Vanilla
-.\deploy_vanilla_mc_container.ps1
-```    
+    ```ps1
+    # Vanilla
+    .\deploy_vanilla_mc_container.ps1
+
+    # Forge
+    .\deploy_forge_mc_container.ps1
+    ```    
 
 ## Contributing
 
