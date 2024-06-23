@@ -7,7 +7,9 @@ echo "Current directory: $(pwd)"
 # Define the default jar URL
 # TODO: Pick the jar URL based on the Minecraft version set in the environment
 # this whole logic should probably be decoupled into a configuration file
-DEFAULT_JAR_URL="https://maven.minecraftforge.net/net/minecraftforge/forge/1.21-51.0.17/forge-1.21-51.0.17-installer.jar"
+#DEFAULT_JAR_URL="https://maven.minecraftforge.net/net/minecraftforge/forge/1.21-51.0.17/forge-1.21-51.0.17-installer.jar"
+DEFAULT_JAR_URL="https://maven.minecraftforge.net/net/minecraftforge/forge/1.20.6-50.1.0/forge-1.20.6-50.1.0-universal.jar"
+
 
 # Use the JAR_URL environment variable if provided, otherwise use the default
 JAR_URL=${JAR_URL:-$DEFAULT_JAR_URL}
