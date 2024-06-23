@@ -2,7 +2,7 @@
     "resourceGroup": "tylergreer-rg",
     "location": "eastus",
     "registryName": "tylergreer",
-    "taskName": "mcBuildTask",
+    "taskName": "mcForgeBuildTask2",
     "imageName": "minecraftforgeserver",
     "githubRepo": "https://github.com/tgreer812/MinecraftServerContainer.git",
     "dockerfilePath": "Dockerfile"

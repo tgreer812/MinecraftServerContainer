@@ -43,24 +43,27 @@ Write-Host "Dockerfile Path: $($config.dockerfilePath)"
 # Create ACR task with source control triggers disabled
 Write-Host "Creating ACR task..."
 
-# Initialize the base command
-$command = "az acr task create"
+# Define the command parts
+$commandParts = @(
+    "az acr task create",
+    "--debug",
+    "--verbose",
+    "--registry $($config.registryName)",
+    "--name $($config.taskName)",
+    "--image '$($config.imageName):{{.Run.ID}}'",
+    "--context $($config.githubRepo)",
+    "--file $($config.dockerfilePath)",
+    "--commit-trigger-enabled false",
+    "--pull-request-trigger-enabled false"
+)
 
-# Add arguments one at a time
-$command += " --debug"
-$command += " --verbose"
-$command += " --registry $($config.registryName)"
-$command += " --name $($config.taskName)"
-$command += " --image $($config.imageName):{{.Run.ID}}"
-$command += " --context $($config.githubRepo)"
-$command += " --file $($config.dockerfilePath)"
-$command += " --commit-trigger-enabled false"
-$command += " --pull-request-trigger-enabled false"
-
-# Add the build argument if the forge flag is set
-if ($forge) {
-    $command += " --arg USE_FORGE=true"
+# Add build argument if specified
+if ($config.UseForge -eq "true") {
+    $commandParts += "--arg USE_FORGE=true"
 }
+
+# Join the command parts into a single string
+$command = $commandParts -join " "
 
 # Output the full command (for debugging)
 Write-Host "Running command: $command"
@@ -68,7 +71,3 @@ Write-Host "Running command: $command"
 # Run the command
 Invoke-Expression $command
 Check-Error "Failed to create ACR task. Exiting."
-
-
-Write-Host "Done."
-pause

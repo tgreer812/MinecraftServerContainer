@@ -21,4 +21,5 @@ if [ "$USE_FORGE" = "true" ]; then
   cd ./server && /app/start-forge-server.sh
 else
   echo "Starting Minecraft Vanilla server..."
-    cd ./server && /app/start-vanilla-server.sh
+  cd ./server && /app/start-vanilla-server.sh
+fi
