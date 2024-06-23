@@ -11,8 +11,6 @@ $jsonContent = Get-Content -Raw -Path $jsonPath | ConvertFrom-Json
 # Initialize the base command
 $command = @(
     "az container create",
-    "--debug",
-    "--verbose"
     "--resource-group $($jsonContent.'resource-group')",
     "--name $($jsonContent.name)",
     "--image $($jsonContent.image)",

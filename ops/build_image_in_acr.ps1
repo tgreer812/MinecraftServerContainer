@@ -51,8 +51,6 @@ Write-Host "Creating ACR task..."
 # Define the command parts
 $commandParts = @(
     "az acr task create",
-    "--debug",
-    "--verbose",
     "--registry $($config.registryName)",
     "--name $($config.taskName)",
     "--image $($config.imageName):$uuid",  # Use generated UUID
