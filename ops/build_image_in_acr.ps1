@@ -9,8 +9,10 @@ $config = Get-Content -Raw -Path $configPath | ConvertFrom-Json
 # Set forge to false if not specified
 if (-not $forge) {
     $forge = $false
+    Write-Host "Forge not specified. Defaulting to false."
 } else {
     $forge = $true
+    Write-Host "Forge specified. Using true."
 }
 
 # Function to check for errors and exit if an error occurs
@@ -32,11 +34,14 @@ if ($registryExists -eq 0) {
 
 Write-Host "Registry name '$($config.registryName)' verified."
 
+# Generate a random UUID for the image tag
+$uuid = [guid]::NewGuid().ToString()
+
 # Log configuration for debugging
 Write-Host "Configuration:"
 Write-Host "Registry Name: $($config.registryName)"
 Write-Host "Task Name: $($config.taskName)"
-Write-Host "Image Name: $($config.imageName):{{.Run.ID}}"
+Write-Host "Image Name: $($config.imageName):$uuid"
 Write-Host "GitHub Repo: $($config.githubRepo)"
 Write-Host "Dockerfile Path: $($config.dockerfilePath)"
 
@@ -50,7 +55,7 @@ $commandParts = @(
     "--verbose",
     "--registry $($config.registryName)",
     "--name $($config.taskName)",
-    "--image '$($config.imageName):{{.Run.ID}}'",
+    "--image $($config.imageName):$uuid",  # Use generated UUID
     "--context $($config.githubRepo)",
     "--file $($config.dockerfilePath)",
     "--commit-trigger-enabled false",
@@ -58,7 +63,7 @@ $commandParts = @(
 )
 
 # Add build argument if specified
-if ($config.UseForge -eq "true") {
+if ($forge -eq $true) {
     $commandParts += "--arg USE_FORGE=true"
 }
 
@@ -71,3 +76,9 @@ Write-Host "Running command: $command"
 # Run the command
 Invoke-Expression $command
 Check-Error "Failed to create ACR task. Exiting."
+
+Write-Host "ACR task created successfully."
+
+# Run the ACR task
+Write-Host "Running ACR task..."
+az acr task run --registry $config.registryName --name $config.taskName
