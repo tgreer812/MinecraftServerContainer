@@ -1,7 +1,7 @@
 {
     "resource-group": "tg-minecraft-rg",
     "name": "test-minecraft-forge-server",
-    "image": "tylergreer.azurecr.io/minecraftforgeserver:07a14e44-c683-409b-bd34-3e111fdf504f",
+    "image": "tylergreer.azurecr.io/minecraftforgeserver:03f991f2-c7af-4aef-a383-f7c3e8663ddf",
     "ports": [25565, 25575],
     "cpu": 2,
     "memory": 8,
